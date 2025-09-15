@@ -1,48 +1,38 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-export const Block1 = ({ mouseEnterCallbak, imgSrc, imgAlt }) => {
-  const [isActive, setActive] = useState(false);
-
-  const mouseEnterHandler = () => {
-    setActive(true);
-    mouseEnterCallbak();
-  };
-
-  return (
-    <div onMouseEnter={mouseEnterHandler} className={isActive ? "active" : ""}>
-      <img src={imgSrc} alt={imgAlt} />
-    </div>
-  );
-};
-
-export const Block2 = ({ mouseEnterCallbak, content }) => {
-  const [isActive, setActive] = useState(false);
+// универсальный блок
+const BaseBlock = ({ mouseEnterCallbak, children }) => {
+  const [isActive, setActive] = useState(false)
 
   const mouseEnterHandler = () => {
-    setActive(true);
-    mouseEnterCallbak();
-  };
+    setActive(true)
+    mouseEnterCallbak()
+  }
 
   return (
-    <div onMouseEnter={mouseEnterHandler} className={isActive ? "active" : ""}>
-      <p>{content}</p>
+    <div onMouseEnter={mouseEnterHandler} className={isActive ? 'active' : ''}>
+      {children}
     </div>
-  );
-};
+  )
+}
 
-export const Block3 = ({ mouseEnterCallbak, userData }) => {
-  const [isActive, setActive] = useState(false);
+// специализированные блоки
+export const Block1 = ({ mouseEnterCallbak, imgSrc, imgAlt }) => (
+  <BaseBlock mouseEnterCallbak={mouseEnterCallbak}>
+    <img src={imgSrc} alt={imgAlt} />
+  </BaseBlock>
+)
 
-  const mouseEnterHandler = () => {
-    setActive(true);
-    mouseEnterCallbak();
-  };
+export const Block2 = ({ mouseEnterCallbak, content }) => (
+  <BaseBlock mouseEnterCallbak={mouseEnterCallbak}>
+    <p>{content}</p>
+  </BaseBlock>
+)
 
-  return (
-    <div onMouseEnter={mouseEnterHandler} className={isActive ? "active" : ""}>
-      <address>
-        country: {userData.country}, street: {userData.street}
-      </address>
-    </div>
-  );
-};
+export const Block3 = ({ mouseEnterCallbak, userData }) => (
+  <BaseBlock mouseEnterCallbak={mouseEnterCallbak}>
+    <address>
+      country: {userData.country}, street: {userData.street}
+    </address>
+  </BaseBlock>
+)
